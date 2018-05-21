@@ -87,7 +87,7 @@ CREATE OR ALTER PROCEDURE add_accomodation
                 VALUES (@since, @till, @prisoner_id, @cell_id);
                 SELECT *
                 FROM ACCOMMODATION
-              end
+end
 
 CREATE OR ALTER PROCEDURE add_incident
                   @short_description NVARCHAR(255),
@@ -100,4 +100,4 @@ CREATE OR ALTER PROCEDURE add_incident
                   VALUES (@short_description, @time_of_incident, @prisoner_id, @cell_id);
                   SELECT *
                   FROM INCIDENT
-                end
+end

@@ -165,9 +165,7 @@ INSERT INTO ACCOMMODATION (SINCE, TILL, PRISONER_ID, CELL_ID)
 VALUES
   ('1998-04-14 00:00:00.000', '2007-08-12 00:00:00.000', '77010123123', 40),
   ('2014-03-08 00:00:00.000', '2018-03-08 00:00:00.000', '80120369420', 47),
-
   ('2013-09-09 00:00:00.000', '2018-12-03 00:00:00.000', '80121212345', 48),
-
   ('2013-10-11 00:00:00.000', '2018-01-01 00:00:00.000', '90050532113', 49),
   ('2011-07-27 00:00:00.000', '2014-07-24 00:00:00.000', '91010123221', 50),
   ('2006-03-12 00:00:00.000', '2010-05-22 00:00:00.000', '92013009810', 51),
@@ -200,6 +198,30 @@ WHERE SENTENCE.ID = PRISONER.SENTENCE_ID AND TILL IS NOT NULL
 
 select * from ACCOMMODATION
 
+
 INSERT INTO INCIDENT (SHORT_DESCRIPTION, TIME_OF_INCIDENT, PRISONER_ID, CELL_ID)
 VALUES
-  ('Pobicie ')
+    ('Próba ucieczki z celi', '2003-07-12 00:00:00.000', '77010123123', 40),
+  ('Spożywanie substancji psychoaktwynych','2016-12-01 00:00:00.000', '80120369420', 47),
+  ('Przemyt sztućców','2013-09-10 00:00:00.000', '80121212345', 48),
+  ('Próba ucieczki z celi' ,'2017-10-11 00:00:00.000', '90050532113', 49),
+  ('Natarczywe niszczenie mienia','2014-07-23 00:00:00.000', '91010123221', 50),
+  ('Kradzież munduru funkcjonariusza służby więziennej','2006-03-13 00:00:00.000', '92013009810', 51),
+  ('Natarczywe niszczenie mienia','2012-12-24 00:00:00.000', '98041400020', 54),
+  ('Próba ucieczki z celi','2016-10-11 00:00:00.000', '99090956719', 58),
+  ( 'Nielegalne rozprowadzanie czasopismy erotycznych','2011-08-27 00:00:00.000', '99120222212', 57),
+  ( 'Nielegalne rozprowadzanie czasopismy erotycznych','2012-03-17 00:00:00.000', '99120222212', 57),
+  ( 'Nielegalne rozprowadzanie czasopismy erotycznych','2013-01-30 00:00:00.000', '99120222212', 57),
+  ( 'Nielegalne rozprowadzanie czasopismy erotycznych','2014-04-14 00:00:00.000', '99120222212', 57),
+  ('Spożywanie środków psychoaktywnych','2018-04-20 00:00:00.000', '55041454311', 32),
+  ('Próba ucieczki z celi','2010-04-11 00:00:00.000', '65120344011', 32),
+  ('Natarczywe niszczenie mienia','2001-03-11 00:00:00.000', '77060612112', 33),
+  ('Spożywanie substancji psychoaktywnych', '1993-04-20 00:00:00.000', '77070742019', 33),
+  ('Spożywanie substancji psychoaktywnych', '1994-04-20 00:00:00.000', '77070742019', 33),
+  ('Spożywanie substancji psychoaktywnych', '1995-04-20 00:00:00.000', '77070742019', 33),
+  ('Spożywanie substancji psychoaktywnych', '1996-04-20 00:00:00.000', '77070742019', 33),
+  ('Spożywanie substancji psychoaktywnych', '1997-04-20 00:00:00.000', '77070742019', 33),
+  ('Spożywanie substancji psychoaktywnych', '1998-04-20 00:00:00.000', '77070742019', 33);
+
+SELECT * FROM INCIDENT
+
