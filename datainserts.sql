@@ -1,3 +1,7 @@
+
+CREATE PROCEDURE fill_province
+  AS
+  BEGIN
 INSERT INTO PROVINCE (TERYT, NAME)
 VALUES
   (02, 'Dolnośląskie'),
@@ -19,7 +23,10 @@ VALUES
 
 SELECT *
 FROM PROVINCE
-
+END
+CREATE PROCEDURE fill_city
+    AS
+    BEGIN
 INSERT INTO CITY (NAME, PROVINCE_ID)
 VALUES
   ('Barczewo', 28),
@@ -41,29 +48,40 @@ VALUES
   ('Łódź', 10),
   ('Stargard', 32),
   ('Poznań', 30),
-  ('Sztum', 22);
-
+  ('Sztum', 22),
+      ('Goleniów', 32),
+  ('Kalisz', 30),
+  ('Malbork', 28);
+END
+CREATE PROCEDURE fill_prison
+    AS
+  BEGIN
 INSERT INTO PRISON (NAME, NUMBER_OF_PRISONER, CITY_ID)
 VALUES
-  ('ZK Barczewko', 1, 1),
+  ('ZK Barczewko', 2, 1),
   ('ZK Biała Podlaska', 0, 2),
   ('ZK Białystok', 0, 3),
-  ('ZK Braniewo', 0, 4),
-  ('ZK Brzeg', 0, 5),
-  ('ZK Cieszyn', 0, 6),
+  ('ZK Braniewo', 3, 4),
+  ('ZK Brzeg', 1, 5),
+  ('ZK Cieszyn', 6, 6),
   ('ZK Herby', 0, 7),
   ('ZK Iława', 0, 8),
   ('ZK Kłodzko', 0, 9),
   ('ZK Racibórz', 0, 10),
   ('ZK Siedlce', 0, 11),
-  ('ZK Tarnów', 0, 13),
+  ('ZK Tarnów', 1, 13),
   ('ZK Zabrze', 0, 15),
   ('ZK Szczecin', 0, 16),
   ('ZK Łódź', 0, 17),
   ('ZK Stargard', 0, 18),
-  ('ZK Sztum', 0, 20);
-
-
+  ('ZK Sztum', 0, 20),
+    ('ZK Goleniów', 0, 21),
+  ('ZK Kalisz', 0, 22),
+  ('ZK Malbork', 0, 23);
+END
+CREATE PROCEDURE fill_sentence
+  AS
+  BEGIN
 INSERT INTO SENTENCE (DELINQUENCY, SINCE, TILL, PRISON_ID)
 VALUES
   ('Morderstwo', '1999 - 03 - 12', null, 1),
@@ -88,9 +106,13 @@ VALUES
   ('Porwanie', '1992 - 02 - 13', null, 6),
   ('Porwanie', '1992 - 02 - 13', null, 8);
 
+
 SELECT *
 FROM SENTENCE
-
+END
+CREATE PROCEDURE fill_prisoner
+  AS
+  BEGIN
 INSERT INTO PRISONER (PESEL, NAME, AGE, NUMBER_OF_CRIMES, SEX, SECOND_NAME, SENTENCE_ID, CITY_ID)
 VALUES
   ('93012307211', 'Dawid', 25, 1, 'M', 'Markowicz', 47, 1),
@@ -117,7 +139,10 @@ VALUES
 
 select *
 from PRISONER
-
+END
+  CREATE PROCEDURE fill_cell
+    AS
+    BEGIN
 INSERT INTO CELL (RESIDORS_LIMIT, CURRENT_RESIDORS_NUMBER, PRISON_ID)
 VALUES
   (1, 1, 1),
@@ -148,11 +173,14 @@ VALUES
   (1, 0, 14),
   (1, 0, 15),
   (1, 0, 16),
-  (1, 0, 17);
+  (1, 0, 17),
+  (1, 0, 18),
+  (1, 0, 19),
+  (1, 0, 20);
 
 select *
 from CELL
-
+END
 SELECT
   PRISONER.PESEL,
   SENTENCE.SINCE,
@@ -160,7 +188,9 @@ SELECT
   PRISONER.SEX
 FROM PRISONER, SENTENCE
 WHERE PRISONER.SENTENCE_ID = SENTENCE.ID AND SENTENCE.TILL IS NULL
-
+CREATE PROCEDURE fill_accommodation
+  AS
+  BEGIN
 INSERT INTO ACCOMMODATION (SINCE, TILL, PRISONER_ID, CELL_ID)
 VALUES
   ('1998-04-14 00:00:00.000', '2007-08-12 00:00:00.000', '77010123123', 40),
@@ -187,6 +217,7 @@ VALUES
 
 select *
 from ACCOMMODATION
+END
 
 SELECT
   SENTENCE.SINCE,
@@ -199,6 +230,9 @@ WHERE SENTENCE.ID = PRISONER.SENTENCE_ID AND TILL IS NOT NULL
 select * from ACCOMMODATION
 
 
+CREATE PROCEDURE fill_incident
+  AS
+  BEGIN
 INSERT INTO INCIDENT (SHORT_DESCRIPTION, TIME_OF_INCIDENT, PRISONER_ID, CELL_ID)
 VALUES
     ('Próba ucieczki z celi', '2003-07-12 00:00:00.000', '77010123123', 40),
@@ -224,4 +258,4 @@ VALUES
   ('Spożywanie substancji psychoaktywnych', '1998-04-20 00:00:00.000', '77070742019', 33);
 
 SELECT * FROM INCIDENT
-
+END
