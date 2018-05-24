@@ -98,3 +98,4 @@ EXEC new_prison 15, 'DS HWDP', 2
 
     SELECT IDENT_CURRENT('PRISON')
   select * from PRISON
+

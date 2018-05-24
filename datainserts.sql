@@ -115,27 +115,27 @@ CREATE PROCEDURE fill_prisoner
   BEGIN
 INSERT INTO PRISONER (PESEL, NAME, AGE, NUMBER_OF_CRIMES, SEX, SECOND_NAME, SENTENCE_ID, CITY_ID)
 VALUES
-  ('93012307211', 'Dawid', 25, 1, 'M', 'Markowicz', 47, 1),
-  ('65120344011', 'Krystian', 52, 2, 'M', 'Ziarkowski', 48, 2),
-  ('80121212345', 'Jolanta', 38, 1, 'F', 'Rulko', 49, 2),
-  ('55041454311', 'Donald', 63, 120, 'M', 'Tusk', 50, 14),
-  ('00123167820', 'Katarzyna', 18, 12, 'F', 'Wadowicz', 51, 19),
-  ('99090956719', 'Janusz', 19, 66, 'M', 'Tracz', 52, 12),
-  ('97070712316', 'Radosław', 21, 1, 'M', 'Słowiński', 53, 3),
-  ('90030457610', 'Paweł', 28, 12, 'M', 'Furmanek', 54, 20),
-  ('90010198712', 'Wojciech', 28, 12, 'M', 'Krawczyk', 55, 1),
-  ('90050532113', 'Paweł', 28, 3, 'M', 'Krawczyk', 56, 1),
-  ('91010123221', 'Rozalia', 27, 11, 'F', 'Wojszel', 57, 1),
-  ('99120222212', 'Alexis', 19, 1, 'F', 'Levefre', 58, 19),
-  ('39041411111', 'Jan', 79, 1, 'M', 'Staniszewski', 59, 12),
-  ('77010123123', 'Dalia', 41, 44, 'F', 'Shitenheit', 60, 14),
-  ('92013009810', 'Jakub', 26, 1, 'M', 'Charkiewicz', 61, 3),
-  ('98041400020', 'Krystyna', 20, 1, 'F', 'Czubówna', 62, 11),
-  ('80120369420', 'Janina', 38, 69, 'F', 'Jarocka', 63, 17),
-  ('81020211213', 'Norbert', 37, 111, 'M', 'Sernik', 64, 11),
-  ('77070742019', 'Jan', 41, 120, 'M', 'Buch', 65, 19),
-  ('77060612112', 'Jacek', 41, 11, 'M', 'Jackowski', 66, 11),
-  ('98033042011', 'Tomasz', 20, 33, 'M', 'Chada', 67, 17);
+  ('93012307211', 'Dawid', 25, 1, 'M', 'Markowicz', 1, 1),
+  ('65120344011', 'Krystian', 52, 2, 'M', 'Ziarkowski', 2, 2),
+  ('80121212345', 'Jolanta', 38, 1, 'F', 'Rulko', 3, 2),
+  ('55041454311', 'Donald', 63, 120, 'M', 'Tusk', 4, 14),
+  ('00123167820', 'Katarzyna', 18, 12, 'F', 'Wadowicz', 5, 19),
+  ('99090956719', 'Janusz', 19, 66, 'M', 'Tracz', 6, 12),
+  ('97070712316', 'Radosław', 21, 1, 'M', 'Słowiński', 7, 3),
+  ('90030457610', 'Paweł', 28, 12, 'M', 'Furmanek', 8, 20),
+  ('90010198712', 'Wojciech', 28, 12, 'M', 'Krawczyk', 9, 1),
+  ('90050532113', 'Paweł', 28, 3, 'M', 'Krawczyk', 10, 1),
+  ('91010123221', 'Rozalia', 27, 11, 'F', 'Wojszel', 11, 1),
+  ('99120222212', 'Alexis', 19, 1, 'F', 'Levefre', 12, 19),
+  ('39041411111', 'Jan', 79, 1, 'M', 'Staniszewski', 13, 12),
+  ('77010123123', 'Dalia', 41, 44, 'F', 'Shitenheit', 14, 14),
+  ('92013009810', 'Jakub', 26, 1, 'M', 'Charkiewicz', 15, 3),
+  ('98041400020', 'Krystyna', 20, 1, 'F', 'Czubówna', 16, 11),
+  ('80120369420', 'Janina', 38, 69, 'F', 'Jarocka', 17, 17),
+  ('81020211213', 'Norbert', 37, 111, 'M', 'Sernik', 18, 11),
+  ('77070742019', 'Jan', 41, 120, 'M', 'Buch', 19, 19),
+  ('77060612112', 'Jacek', 41, 11, 'M', 'Jackowski', 20, 11),
+  ('98033042011', 'Tomasz', 20, 33, 'M', 'Chada', 21, 17);
 
 select *
 from PRISONER
@@ -188,32 +188,32 @@ SELECT
   PRISONER.SEX
 FROM PRISONER, SENTENCE
 WHERE PRISONER.SENTENCE_ID = SENTENCE.ID AND SENTENCE.TILL IS NULL
-CREATE PROCEDURE fill_accommodation
+ALTER PROCEDURE fill_accommodation
   AS
   BEGIN
 INSERT INTO ACCOMMODATION (SINCE, TILL, PRISONER_ID, CELL_ID)
 VALUES
-  ('1998-04-14 00:00:00.000', '2007-08-12 00:00:00.000', '77010123123', 40),
-  ('2014-03-08 00:00:00.000', '2018-03-08 00:00:00.000', '80120369420', 47),
-  ('2013-09-09 00:00:00.000', '2018-12-03 00:00:00.000', '80121212345', 48),
-  ('2013-10-11 00:00:00.000', '2018-01-01 00:00:00.000', '90050532113', 49),
-  ('2011-07-27 00:00:00.000', '2014-07-24 00:00:00.000', '91010123221', 50),
-  ('2006-03-12 00:00:00.000', '2010-05-22 00:00:00.000', '92013009810', 51),
-  ('2011-03-03 00:00:00.000', '2013-09-08 00:00:00.000', '98041400020', 54),
-  ('2016-05-12 00:00:00.000', '2017-04-04 00:00:00.000', '99090956719', 58),
-  ('2011-07-27 00:00:00.000', '2014-07-24 00:00:00.000', '99120222212', 57),
-  ('2018-05-05', NULL, '00123167820', 30),
-  ('2010-04-10', NULL, '65120344011', 32),
-  ('2017-04-14 00:00:00.000', NULL, '55041454311', 32),
-  ('2010-04-10 00:00:00.000', NULL, '65120344011', 32),
-  ('1992-02-13 00:00:00.000', NULL, '77060612112', 33),
-  ('1992-02-13 00:00:00.000', NULL, '77070742019', 33),
-  ('1985-06-12 00:00:00.000', NULL, '81020211213', 33),
-  ('2015-03-21 00:00:00.000', NULL, '90010198712', 33),
-  ('2014-04-20 00:00:00.000', NULL, '90030457610', 33),
-  ('1999-03-12 00:00:00.000', NULL, '93012307211', 33),
-  ('2014-04-20 00:00:00.000', NULL, '97070712316', 34),
-  ('1992-02-13 00:00:00.000', NULL, '98033042011', 36);
+  ('1998-04-14 00:00:00.000', '2007-08-12 00:00:00.000', '77010123123', 11),
+  ('2014-03-08 00:00:00.000', '2018-03-08 00:00:00.000', '80120369420', 18),
+  ('2013-09-09 00:00:00.000', '2018-12-03 00:00:00.000', '80121212345', 19),
+  ('2013-10-11 00:00:00.000', '2018-01-01 00:00:00.000', '90050532113', 20),
+  ('2011-07-27 00:00:00.000', '2014-07-24 00:00:00.000', '91010123221', 21),
+  ('2006-03-12 00:00:00.000', '2010-05-22 00:00:00.000', '92013009810', 22),
+  ('2011-03-03 00:00:00.000', '2013-09-08 00:00:00.000', '98041400020', 25),
+  ('2016-05-12 00:00:00.000', '2017-04-04 00:00:00.000', '99090956719', 29),
+  ('2011-07-27 00:00:00.000', '2014-07-24 00:00:00.000', '99120222212', 28),
+  ('2018-05-05', NULL, '00123167820', 1),
+  ('2010-04-10', NULL, '65120344011', 3),
+  ('2017-04-14 00:00:00.000', NULL, '55041454311', 3),
+  ('2010-04-10 00:00:00.000', NULL, '65120344011', 3),
+  ('1992-02-13 00:00:00.000', NULL, '77060612112', 4),
+  ('1992-02-13 00:00:00.000', NULL, '77070742019', 4),
+  ('1985-06-12 00:00:00.000', NULL, '81020211213', 4),
+  ('2015-03-21 00:00:00.000', NULL, '90010198712', 4),
+  ('2014-04-20 00:00:00.000', NULL, '90030457610', 4),
+  ('1999-03-12 00:00:00.000', NULL, '93012307211', 4),
+  ('2014-04-20 00:00:00.000', NULL, '97070712316', 5),
+  ('1992-02-13 00:00:00.000', NULL, '98033042011', 6);
 
 select *
 from ACCOMMODATION
@@ -230,32 +230,71 @@ WHERE SENTENCE.ID = PRISONER.SENTENCE_ID AND TILL IS NOT NULL
 select * from ACCOMMODATION
 
 
-CREATE PROCEDURE fill_incident
+ALTER PROCEDURE fill_incident
   AS
   BEGIN
 INSERT INTO INCIDENT (SHORT_DESCRIPTION, TIME_OF_INCIDENT, PRISONER_ID, CELL_ID)
 VALUES
-    ('Próba ucieczki z celi', '2003-07-12 00:00:00.000', '77010123123', 40),
-  ('Spożywanie substancji psychoaktwynych','2016-12-01 00:00:00.000', '80120369420', 47),
-  ('Przemyt sztućców','2013-09-10 00:00:00.000', '80121212345', 48),
-  ('Próba ucieczki z celi' ,'2017-10-11 00:00:00.000', '90050532113', 49),
-  ('Natarczywe niszczenie mienia','2014-07-23 00:00:00.000', '91010123221', 50),
-  ('Kradzież munduru funkcjonariusza służby więziennej','2006-03-13 00:00:00.000', '92013009810', 51),
-  ('Natarczywe niszczenie mienia','2012-12-24 00:00:00.000', '98041400020', 54),
-  ('Próba ucieczki z celi','2016-10-11 00:00:00.000', '99090956719', 58),
-  ( 'Nielegalne rozprowadzanie czasopismy erotycznych','2011-08-27 00:00:00.000', '99120222212', 57),
-  ( 'Nielegalne rozprowadzanie czasopismy erotycznych','2012-03-17 00:00:00.000', '99120222212', 57),
-  ( 'Nielegalne rozprowadzanie czasopismy erotycznych','2013-01-30 00:00:00.000', '99120222212', 57),
-  ( 'Nielegalne rozprowadzanie czasopismy erotycznych','2014-04-14 00:00:00.000', '99120222212', 57),
-  ('Spożywanie środków psychoaktywnych','2018-04-20 00:00:00.000', '55041454311', 32),
-  ('Próba ucieczki z celi','2010-04-11 00:00:00.000', '65120344011', 32),
-  ('Natarczywe niszczenie mienia','2001-03-11 00:00:00.000', '77060612112', 33),
-  ('Spożywanie substancji psychoaktywnych', '1993-04-20 00:00:00.000', '77070742019', 33),
-  ('Spożywanie substancji psychoaktywnych', '1994-04-20 00:00:00.000', '77070742019', 33),
-  ('Spożywanie substancji psychoaktywnych', '1995-04-20 00:00:00.000', '77070742019', 33),
-  ('Spożywanie substancji psychoaktywnych', '1996-04-20 00:00:00.000', '77070742019', 33),
-  ('Spożywanie substancji psychoaktywnych', '1997-04-20 00:00:00.000', '77070742019', 33),
-  ('Spożywanie substancji psychoaktywnych', '1998-04-20 00:00:00.000', '77070742019', 33);
+    ('Próba ucieczki z celi', '2003-07-12 00:00:00.000', '77010123123', 11),
+  ('Spożywanie substancji psychoaktwynych','2016-12-01 00:00:00.000', '80120369420', 18),
+  ('Przemyt sztućców','2013-09-10 00:00:00.000', '80121212345', 19),
+  ('Próba ucieczki z celi' ,'2017-10-11 00:00:00.000', '90050532113', 20),
+  ('Natarczywe niszczenie mienia','2014-07-23 00:00:00.000', '91010123221', 21),
+  ('Kradzież munduru funkcjonariusza służby więziennej','2006-03-13 00:00:00.000', '92013009810', 21),
+  ('Natarczywe niszczenie mienia','2012-12-24 00:00:00.000', '98041400020', 25),
+  ('Próba ucieczki z celi','2016-10-11 00:00:00.000', '99090956719', 29),
+  ( 'Nielegalne rozprowadzanie czasopismy erotycznych','2011-08-27 00:00:00.000', '99120222212', 28),
+  ( 'Nielegalne rozprowadzanie czasopismy erotycznych','2012-03-17 00:00:00.000', '99120222212', 28),
+  ( 'Nielegalne rozprowadzanie czasopismy erotycznych','2013-01-30 00:00:00.000', '99120222212', 28),
+  ( 'Nielegalne rozprowadzanie czasopismy erotycznych','2014-04-14 00:00:00.000', '99120222212', 28),
+  ('Spożywanie środków psychoaktywnych','2018-04-20 00:00:00.000', '55041454311', 3),
+  ('Próba ucieczki z celi','2010-04-11 00:00:00.000', '65120344011', 3),
+  ('Natarczywe niszczenie mienia','2001-03-11 00:00:00.000', '77060612112', 4),
+  ('Spożywanie substancji psychoaktywnych', '1993-04-20 00:00:00.000', '77070742019', 4),
+  ('Spożywanie substancji psychoaktywnych', '1994-04-20 00:00:00.000', '77070742019', 4),
+  ('Spożywanie substancji psychoaktywnych', '1995-04-20 00:00:00.000', '77070742019', 4),
+  ('Spożywanie substancji psychoaktywnych', '1996-04-20 00:00:00.000', '77070742019', 4),
+  ('Spożywanie substancji psychoaktywnych', '1997-04-20 00:00:00.000', '77070742019', 4),
+  ('Spożywanie substancji psychoaktywnych', '1998-04-20 00:00:00.000', '77070742019', 4);
 
 SELECT * FROM INCIDENT
 END
+
+CREATE PROCEDURE fill_all
+  AS
+  BEGIN
+    EXEC fill_province
+    EXEC fill_city
+    EXEC fill_prison
+    EXEC fill_sentence
+    EXEC fill_prisoner
+    EXEC fill_cell
+    EXEC fill_accommodation
+    EXEC fill_incident
+  end
+  exec fill_all
+
+  SELECT * FROM CELL
+  SELECT * FROM ACCOMMODATION
+
+  delete from Incident
+  delete from Accommodation
+  delete from CELL
+  delete from Prisoner
+  delete from Sentence
+  delete from Prison
+  delete from City
+  delete from Province
+
+  select * from PRISON
+    SELECT * FROM CITY
+  SELECT * FROM PRISON
+  SELECT * FROM SENTENCE
+  SELECT * FROM PRISONER
+
+DBCC CHECKIDENT(CITY, RESEED, 0)
+DBCC CHECKIDENT(PRISON, RESEED, 0)
+DBCC CHECKIDENT(SENTENCE, RESEED, 0)
+DBCC CHECKIDENT(CELL, RESEED, 0)
+  DBCC CHECKIDENT(ACCOMMODATION, RESEED, 0)
+  DBCC CHECKIDENT(INCIDENT, RESEED, 0)
