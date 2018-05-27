@@ -11,13 +11,19 @@ ALTER PROCEDURE accommodate_prisoner
     @prison_name      NVARCHAR(255),
     @since            DATETIME,
     @till             DATETIME,
-    @cell_id INT
+    @cell_id          INT
+
+
 
 AS
   BEGIN
 
-    DECLARE @prison_id INT = (SELECT PRISON.ID FROM PRISON WHERE PRISON.NAME = @prison_name);
-    DECLARE @city_id INT = (SELECT CITY.ID FROM CITY WHERE CITY.NAME = @city_name);
+    DECLARE @prison_id INT = (SELECT PRISON.ID
+                              FROM PRISON
+                              WHERE PRISON.NAME = @prison_name);
+    DECLARE @city_id INT = (SELECT CITY.ID
+                            FROM CITY
+                            WHERE CITY.NAME = @city_name);
 
     IF EXISTS(SELECT CELL.ID
               FROM CELL
@@ -27,8 +33,9 @@ AS
        AND NOT EXISTS(SELECT *
                       FROM PRISONER
                       WHERE PRISONER.PESEL = @pesel)
-      AND EXISTS(SELECT * FROM CITY
-       WHERE  CITY.ID = @city_id)
+       AND EXISTS(SELECT *
+                  FROM CITY
+                  WHERE CITY.ID = @city_id)
       BEGIN
         INSERT INTO SENTENCE (PRISON_ID, DELINQUENCY, SINCE, TILL)
         VALUES (@prison_id, @deliquency, @since, @till);
@@ -41,17 +48,17 @@ AS
                 @age,
                 @number_of_crimes,
                 @sex,
-                @second_name,
+                /@second_name,
                 (SELECT IDENT_CURRENT('SENTENCE')),
                 @city_id)
         INSERT INTO ACCOMMODATION (SINCE, TILL, PRISONER_ID, CELL_ID)
         VALUES (@since, @till, @pesel, @cell_id);
         exec update_cell @cell_id, null, 1, @prison_id;
-         SET NOCOUNT ON
-    UPDATE PRISON
-      SET
-        NUMBER_OF_PRISONER = NUMBER_OF_PRISONER+1
-      WHERE ID=@prison_id
+        SET NOCOUNT ON
+        UPDATE PRISON
+        SET
+          NUMBER_OF_PRISONER = NUMBER_OF_PRISONER + 1
+        WHERE ID = @prison_id
       END
     ELSE
       BEGIN
@@ -60,19 +67,36 @@ AS
   END
   drop procedure accommodate_prisoner
 
-  SELECT CITY.NAME AS [city name], PRISON.NAME as [prison name], CELL.ID
-    FROM CITY, PRISON, CELL
+   EXEC accommodate_prisoner  '99031112330', 'Krystian', 'Jarmożny', 19, 'M', 'Warszawa', 'Napad na bank', 12, 'ZK Stargard', '2018-02-03', null, 10
+
+    select * from CELL
+
+  select * from PRISONER
+
+  SELECT
+    CITY.NAME   AS [city name],
+    PRISON.NAME as [prison name],
+    PRISON.ID
+  FROM CITY, PRISON, CELL, SENTENCE, PRISONER
   WHERE PRISON.ID = CELL.PRISON_ID AND PRISON.CITY_ID = CITY.ID AND CELL.CURRENT_RESIDORS_NUMBER < CELL.RESIDORS_LIMIT
 
-  EXEC accommodate_prisoner 'ZK Stargard', 'Ucieczka przed pasami', '03-03-2003', '12-04-2010', '21233123973', 'Krystian', 19, 'M', 'Brudsy', 3,
-                        'Braniewo',39;
-  SELECT * FROM PRISON
+SELECT
+    CITY.NAME   AS [city name],
+    PRISON.NAME as [prison name],
+    PRISONER.NAME
+  FROM CITY, PRISON, CELL, SENTENCE, PRISONER
+  WHERE PRISON.ID = CELL.PRISON_ID AND PRISON.CITY_ID = CITY.ID AND PRISONER.SENTENCE_ID = SENTENCE.ID AND SENTENCE.PRISON_ID = PRISON.ID
+  AND PRISONER.CITY_ID = PRISON.CITY_ID
+
+
+  SELECT *
+  FROM PRISON
 
 
   CREATE PROCEDURE new_prison
-      @city_id             INT,
-      @name                NVARCHAR(40),
-      @residors_limit      INT
+      @city_id        INT,
+      @name           NVARCHAR(40),
+      @residors_limit INT
 
   AS
     BEGIN
@@ -92,10 +116,13 @@ AS
       FROM CELL
     END
     drop procedure new_prison
-EXEC new_prison 15, 'DS HWDP', 2
+    EXEC new_prison 15, 'DS HWDP', 2
 
-    SELECT CITY.ID FROM CITY WHERE CITY.NAME = 'Braniewo'
+    SELECT CITY.ID
+    FROM CITY
+    WHERE CITY.NAME = 'Braniewo'
 
     SELECT IDENT_CURRENT('PRISON')
-  select * from PRISON
+    select *
+    from PRISON
 
