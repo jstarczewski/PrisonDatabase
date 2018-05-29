@@ -48,7 +48,9 @@ CREATE PROCEDURE update_sentence
 @prison_id INT
   AS
 BEGIN
-  SET NOCOUNT ON
+  IF @since < @till
+    BEGIN
+      SET NOCOUNT ON
   UPDATE SENTENCE
     SET
       DELINQUENCY = ISNULL(@deliquency, DELINQUENCY),
@@ -56,6 +58,12 @@ BEGIN
       TILL = ISNULL(@till, TILL),
       PRISON_ID = ISNULL(@prison_id, PRISON_ID)
   WHERE ID=@id
+    end
+  ELSE
+    BEGIN
+      PRINT N'Data poczatku odbywania wyroku jest później niz końca';
+    end
+
 end
 
 CREATE PROCEDURE update_prisoner
@@ -102,15 +110,18 @@ CREATE PROCEDURE update_cell
   select * from cell
   select* from PRISONER
   select * from SENTENCE
-CREATE PROCEDURE update_accommodation
+alter PROCEDURE update_accommodation
 @id INT,
 @since DATETIME,
 @till DATETIME,
-@prisoner_id INT,
+@prisoner_id NVARCHAR(11),
 @cell_id INT
   AS
   BEGIN
-    SET NOCOUNT ON
+
+    IF @since < @till BEGIN
+
+       SET NOCOUNT ON
     UPDATE ACCOMMODATION
       SET
         SINCE = ISNULL(@since, SINCE),
@@ -118,6 +129,13 @@ CREATE PROCEDURE update_accommodation
         PRISONER_ID = ISNULL(@prisoner_id, PRISONER_ID),
         CELL_ID = ISNULL(@cell_id, CELL_ID)
     WHERE ACCOMMODATION_ID = @id
+
+    end
+    ELSE
+    BEGIN
+      PRINT N'Data zakonczenia zakwaterowania jest wczesniej niż końca';
+    end
+
   end
 
 CREATE PROCEDURE update_incident

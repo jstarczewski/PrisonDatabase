@@ -48,7 +48,7 @@ AS
                 @age,
                 @number_of_crimes,
                 @sex,
-                /@second_name,
+                @second_name,
                 (SELECT IDENT_CURRENT('SENTENCE')),
                 @city_id)
         INSERT INTO ACCOMMODATION (SINCE, TILL, PRISONER_ID, CELL_ID)
@@ -116,7 +116,7 @@ SELECT
       FROM CELL
     END
     drop procedure new_prison
-    EXEC new_prison 15, 'DS HWDP', 2
+    EXEC new_prison 15, 'DS Ustronie', 2
 
     SELECT CITY.ID
     FROM CITY

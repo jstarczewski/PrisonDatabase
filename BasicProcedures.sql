@@ -1,4 +1,4 @@
-ALTER PROCEDURE find_prisoners_from_city
+CREATE PROCEDURE find_prisoners_from_city
   @city_name NVARCHAR(40)
   AS
   BEGIN
@@ -54,4 +54,6 @@ ALTER PROCEDURE find_prisoners_free_before
     AND SENTENCE.TILL IS NOT NULL
   END
 
-  EXEC find_prisoners_free_before '2000-01-20'
+  select * from prisoner
+
+  EXEC find_prisoners_free_before '2001-01-20'

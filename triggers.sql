@@ -165,7 +165,7 @@ AS
 
 CREATE TRIGGER update_prisoners_in_prison_after_delete
   on ACCOMMODATION
-  AFTER INSERT
+  AFTER DELETE
 AS
   BEGIN
     DECLARE @prison_id INT = (SELECT CELL.PRISON_ID
@@ -204,3 +204,50 @@ WHERE dbo.PRISONER.PESEL = '99031112333'
 drop trigger delete_incidents
 SELECT *
 FROM INCIDENT
+
+
+
+ALTER TRIGGER update_sentence_on_wrong_till
+  ON SENTENCE
+  FOR UPDATE
+AS
+BEGIN
+IF UPDATE(TILL)
+	UPDATE SENTENCE
+	SET TILL = d.TILL
+			from deleted d
+			JOIN SENTENCE s ON (s.ID = d.ID)
+		where d.ID IN (SELECT d.ID
+					FROM deleted d
+					JOIN inserted i ON(i.ID = d.ID)
+					WHERE d.SINCE > i.TILL
+			)
+  PRINT N'Proba zmiany daty wyjscia na mniejsza nie wejscia';
+END
+
+ALTER TRIGGER update_accommodation_on_wrong_till
+  ON ACCOMMODATION
+  FOR UPDATE
+AS
+BEGIN
+IF UPDATE(TILL)
+	UPDATE ACCOMMODATION
+	SET TILL = d.TILL
+			from deleted d
+			JOIN ACCOMMODATION a ON (a.ACCOMMODATION_ID = d.ACCOMMODATION_ID)
+		where d.ACCOMMODATION_ID IN (SELECT d.ACCOMMODATION_ID
+					FROM deleted d
+					JOIN inserted i ON(i.ACCOMMODATION_ID = d.ACCOMMODATION_ID)
+					WHERE d.SINCE > i.TILL
+			)
+  PRINT N'Proba zmiany daty wyjscia na mniejsza nie wejscia';
+END
+
+  select * from ACCOMMODATION
+
+  exec update_accommodation 3, '2013-09-09', '2011-12-03', '80121212345', 19
+
+SELECT * FROM SENTENCE
+
+
+exec update_sentence 3, 'Napad na bank', '2013-09-09', '2018-12-03', 1
