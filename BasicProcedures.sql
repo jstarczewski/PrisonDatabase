@@ -8,17 +8,19 @@ CREATE PROCEDURE find_prisoners_from_city
       SENTENCE.SINCE AS OD,
       SENTENCE.DELINQUENCY AS PRZEWINIENIE
       FROM PRISONER, SENTENCE, CITY
-      WHERE CITY.NAME = @city_name
+      WHERE CITY.NAME LIKE @city_name
     AND CITY.ID = PRISONER.CITY_ID
     AND PRISONER.SENTENCE_ID = SENTENCE.ID
-    AND SENTENCE.TILL IS NULL
   END
+
+  select * from PRISONER
+  select * from CITY
 
   EXEC find_prisoners_from_city 'Barczewo'
 
   EXEC find_prisoner_with_deliquency 'Napad'
 
-ALTER PROCEDURE find_prisoner_sentenced_before
+CREATE PROCEDURE find_prisoner_sentenced_before
   @since DATETIME
   AS
   BEGIN
@@ -37,7 +39,7 @@ ALTER PROCEDURE find_prisoner_sentenced_before
 
   EXEC find_prisoner_sentenced_before '1999-12-2'
 
-ALTER PROCEDURE find_prisoners_free_before
+CREATE PROCEDURE find_prisoners_free_before
     @till DATETIME
     AS
   BEGIN
@@ -52,8 +54,12 @@ ALTER PROCEDURE find_prisoners_free_before
     AND CITY.ID = PRISONER.CITY_ID
     AND PRISONER.SENTENCE_ID = SENTENCE.ID
     AND SENTENCE.TILL IS NOT NULL
+
+
   END
+
+  drop procedure find_prisoners_free_before
 
   select * from prisoner
 
-  EXEC find_prisoners_free_before '2001-01-20'
+  EXEC find_prisoners_free_before '2019-01-20'

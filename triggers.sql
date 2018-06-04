@@ -1,4 +1,4 @@
-CREATE TRIGGER update_city_after_insert
+ALTER TRIGGER update_city_after_insert
   ON PRISONER
   AFTER INSERT
 AS
@@ -41,15 +41,16 @@ AS
       end
   end
 
-CREATE TRIGGER insert_prison
+CREATE TRIGGER insert_prison_message
   ON PRISON
   AFTER INSERT
 AS
   BEGIN
     PRINT N'PRISON ADDED';
   end
+ exec add_prison 3,'DS Ustronie', 3
 
-CREATE TRIGGER update_city_after_update
+ALTER TRIGGER update_city_after_update
   ON PRISONER
   AFTER UPDATE
 AS
@@ -88,17 +89,30 @@ AS
                                       AND PRISON.CITY_ID != PRISONER.CITY_ID
                                       AND PRISONER.PESEL = @pesel);
 
-        exec update_prisoner @pesel, null, null, null, null, null, null, @city_id
+        exec update_prisoner @pesel, null, null, null, null, null, null, @city_id, null
       end
   end
+  drop trigger update_city_after_update
+
+  select * from PRISONER, SENTENCE where PRISONER.SENTENCE_ID = SENTENCE.ID AND SENTENCE.DELINQUENCY LIKE 'Stalking'
+
+  select * from SENTENCE
+
+  exec update_sentence 'Stalking', '2016-05-12', '2018-04-04',	4, 'Stalking',	'2016-05-12',	'2013-04-12',	null
+
+
+
+  select * from SENTENCE
 
 CREATE TRIGGER update_cell_after_update
   ON CELL
   AFTER UPDATE
 AS
   BEGIN
-    PRINT N'PRISON ADDED';
+    PRINT N'CELL UPDATED';
   end
+
+ exec update_cell 1, 1, 1, 1, 1, 1
 
 
 CREATE TRIGGER delete_incident
@@ -108,6 +122,18 @@ AS
   BEGIN
     PRINT N'INCIDENT DELETED';
   end
+
+CREATE TRIGGER delete_cell
+  ON CELL
+  AFTER DELETE
+AS
+  BEGIN
+    PRINT N'CELL DELETED';
+  end
+
+
+
+  delete from INCIDENT
 
 CREATE TRIGGER delete_incidents
   ON PRISONER
@@ -129,6 +155,10 @@ AS
       end
   end
 
+  delete from PRISONER
+
+  drop trigger delete_incidents
+
 
 CREATE TRIGGER update_prisoners_in_cell
   ON ACCOMMODATION
@@ -143,9 +173,10 @@ AS
     SET
       CURRENT_RESIDORS_NUMBER = CURRENT_RESIDORS_NUMBER + 1
     WHERE ID = @cell_id
-
+ PRINT N'Dodano wieznia do celi';
   end
 
+   EXEC accommodate_prisoner  '99031119931', 'Krystian', 'Czajnik', 19, 'M', 'Warszawa', 'Napad na bank', 12, 'ZK Stargard', '2018-02-03', '2020-01-01', 10
 
 CREATE TRIGGER update_prisoners_in_cell_after_delete
   ON ACCOMMODATION
@@ -180,6 +211,7 @@ AS
   end
 
 
+
 CREATE TRIGGER update_prisoners_in_prison
   on ACCOMMODATION
   AFTER INSERT
@@ -195,6 +227,7 @@ AS
       NUMBER_OF_PRISONER = NUMBER_OF_PRISONER + 1
     WHERE ID = @prison_id
   end
+ select * from ACCOMMODATION
 
 SELECT *
 FROM PRISONER
@@ -207,7 +240,7 @@ FROM INCIDENT
 
 
 
-ALTER TRIGGER update_sentence_on_wrong_till
+CREATE TRIGGER update_sentence_on_wrong_till
   ON SENTENCE
   FOR UPDATE
 AS
@@ -225,6 +258,8 @@ IF UPDATE(TILL)
   PRINT N'Proba zmiany daty wyjscia na mniejsza nie wejscia';
 END
 
+drop trigger update_sentence_on_wrong_till
+
 ALTER TRIGGER update_accommodation_on_wrong_till
   ON ACCOMMODATION
   FOR UPDATE
@@ -240,12 +275,15 @@ IF UPDATE(TILL)
 					JOIN inserted i ON(i.ACCOMMODATION_ID = d.ACCOMMODATION_ID)
 					WHERE d.SINCE > i.TILL
 			)
-  PRINT N'Proba zmiany daty wyjscia na mniejsza nie wejscia';
+  PRINT N'Proba zmiany daty konca kwaterunku na wczesniejsza niz poczatek';
 END
 
   select * from ACCOMMODATION
 
-  exec update_accommodation 3, '2013-09-09', '2011-12-03', '80121212345', 19
+  exec update_accommodation '2013-09-09', '2011-12-03', '80121212345', 19
+
+          exec update_accommodation '1998-04-14', '2017-08-12', '77010123123', 12, '1998-04-14', '1977-08-12',
+                                        '77010123123', 11
 
 SELECT * FROM SENTENCE
 

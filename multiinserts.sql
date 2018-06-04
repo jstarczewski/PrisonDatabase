@@ -1,4 +1,4 @@
-ALTER PROCEDURE accommodate_prisoner
+CREATE PROCEDURE accommodate_prisoner
 
     @pesel            NVARCHAR(11),
     @name             NVARCHAR(255),
@@ -53,12 +53,13 @@ AS
                 @city_id)
         INSERT INTO ACCOMMODATION (SINCE, TILL, PRISONER_ID, CELL_ID)
         VALUES (@since, @till, @pesel, @cell_id);
-        exec update_cell @cell_id, null, 1, @prison_id;
+        exec update_cell @cell_id, null, 1, @prison_id, null, null;
         SET NOCOUNT ON
         UPDATE PRISON
         SET
           NUMBER_OF_PRISONER = NUMBER_OF_PRISONER + 1
         WHERE ID = @prison_id
+
       END
     ELSE
       BEGIN
@@ -67,11 +68,19 @@ AS
   END
   drop procedure accommodate_prisoner
 
-   EXEC accommodate_prisoner  '99031112330', 'Krystian', 'Jarmożny', 19, 'M', 'Warszawa', 'Napad na bank', 12, 'ZK Stargard', '2018-02-03', null, 10
+   EXEC accommodate_prisoner  '99777777333', 'Krystian', 'Kajak', 19, 'M', 'Warszawa', 'Napad na bank', 12, 'ZK Stargard', '2018-02-03', '2021-12-12', 10
 
     select * from CELL
 
+  select * from SENTENCE
+
+  select * from ACCOMMODATION
+
+  select * from city
+
   select * from PRISONER
+
+  select * from PRISON
 
   SELECT
     CITY.NAME   AS [city name],
@@ -112,8 +121,7 @@ SELECT
         (@residors_limit, 0, @id),
         (@residors_limit, 0, @id),
         (@residors_limit, 0, @id);
-      SELECT *
-      FROM CELL
+
     END
     drop procedure new_prison
     EXEC new_prison 15, 'DS Ustronie', 2
@@ -125,4 +133,6 @@ SELECT
     SELECT IDENT_CURRENT('PRISON')
     select *
     from PRISON
+
+      select * from cell
 
